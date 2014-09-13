@@ -1,13 +1,13 @@
 <?php
 
 class View {
-  function __construct($viewParent) {
-    $this->viewParent  = $viewParent;
-    $this->viewName    = "index";
+  function __construct($ctrlName) {
+    $this->ctrlName       = $ctrlName;
+    $this->viewFolderName = strtolower( str_replace('Controller', '', $ctrlName) );
   }
 
-  public function render($viewName) {
-    if (isset($viewName)) { $this->viewName = $viewName; }
-    require 'views/' . $this->viewParent . '/' . $this->viewName . '.php';
+  public function render($viewName = null) {
+    $this->viewName = isset($viewName) ? $viewName : 'index';
+    require "views/$this->viewFolderName/$this->viewName.php";
   }
 }

@@ -2,9 +2,16 @@
 
 class Bootstrap {
   function __construct() {
-    $url = $_GET['url'];
+    $url = isset($_GET['url']) ? $_GET['url'] : null;
     $url = rtrim($url, '/');
     $url = explode('/', $url);
+
+    if (empty($url[0])) {
+      require 'controllers/IndexController.php';
+      $controller = new IndexController();
+      $controller->view->render('index');
+      return false;
+    }
 
     $controllerName = ucfirst($url[0]) . 'Controller';
     $actionName     = $url[1];
